@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 
 import lombok.Getter;
 import lombok.Setter;
-import nl.marksnijder.jkik.messages.Message;
+import nl.marksnijder.jkik.message.Sendable;
 
 public class MessageSender {
 	
@@ -16,20 +16,32 @@ public class MessageSender {
 		
 	}
 	
-	public static void sendMessage(Message... messages) {
+	/**
+	 * Allows you to send 100 messages in 1 request, doesn't have the per-second limit as the sendMessage method
+	 * @param messages An array of messages
+	 */
+	public static void broadcastMessages(Sendable... messages) {
+		sendMessage(KikApi.BROADCAST_URL, messages);
+	}
+	
+	public static void sendMessage(Sendable... messages) {
+		sendMessage(KikApi.MESSAGE_URL, messages);
+	}
+	
+	private static void sendMessage(String url, Sendable... messages) {
 		JsonObject toSend = new JsonObject();
 		JsonArray msgArray = new JsonArray();
 
-		for(Message msg : messages) {
+		System.out.println("SENDING MESSAGES!!!");
+		
+		for(Sendable msg : messages) {
 			JsonObject jsonData = msg.getJsonData();
 			msgArray.add(jsonData);
 			System.out.println(jsonData);
 		}
-		System.out.println(msgArray.toString());
 		toSend.add("messages", msgArray);
-		System.out.println(toSend.toString());
-		api.executePost(KikApi.MESSAGE_URL, toSend.toString());
 		
+		api.executePost(url, toSend.toString(), MethodType.POST);
 	}
 
 }

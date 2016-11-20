@@ -1,4 +1,4 @@
-package nl.marksnijder.jkik.messages;
+package nl.marksnijder.jkik.message;
 
 import lombok.Getter;
 

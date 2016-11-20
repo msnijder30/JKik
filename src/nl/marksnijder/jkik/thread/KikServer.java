@@ -1,4 +1,4 @@
-package nl.marksnijder.jkik.threaded;
+package nl.marksnijder.jkik.thread;
 
 import java.io.IOException;
 import java.net.ServerSocket;

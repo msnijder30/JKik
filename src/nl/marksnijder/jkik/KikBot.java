@@ -10,29 +10,38 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import nl.marksnijder.jkik.messages.IsTypingMessage;
-import nl.marksnijder.jkik.messages.Message;
-import nl.marksnijder.jkik.messages.MessageAttribute;
-import nl.marksnijder.jkik.messages.MessageType;
-import nl.marksnijder.jkik.messages.PictureMessage;
-import nl.marksnijder.jkik.messages.TextMessage;
-import nl.marksnijder.jkik.messages.VideoMessage;
+import lombok.Getter;
+import lombok.Setter;
+import nl.marksnijder.jkik.message.FriendPickerMessage;
+import nl.marksnijder.jkik.message.IsTypingMessage;
+import nl.marksnijder.jkik.message.LinkMessage;
+import nl.marksnijder.jkik.message.Message;
+import nl.marksnijder.jkik.message.MessageAttribute;
+import nl.marksnijder.jkik.message.MessageType;
+import nl.marksnijder.jkik.message.PictureMessage;
+import nl.marksnijder.jkik.message.ScanDataMessage;
+import nl.marksnijder.jkik.message.StickerMessage;
+import nl.marksnijder.jkik.message.TextMessage;
+import nl.marksnijder.jkik.message.VideoMessage;
 
 public abstract class KikBot {
 	
+	@Getter @Setter
+	private KikApi api;
+	
 	public abstract void onTextReceived(TextMessage msg);
-	public abstract void onLinkReceived(Message msg);
+	public abstract void onLinkReceived(LinkMessage msg);
 	public abstract void onPictureReceived(PictureMessage msg);
 	public abstract void onVideoReceived(VideoMessage msg);
 	public abstract void onStartChattingReceived(Message msg);
-	public abstract void onScanDataReceived(Message msg);
-	public abstract void onStickerReceived(Message msg);
+	public abstract void onScanDataReceived(ScanDataMessage msg);
+	public abstract void onStickerReceived(StickerMessage msg);
 	public abstract void onIsTypingReceived(IsTypingMessage msg);
 	public abstract void onDeliveryReceiptReceived(Message msg);
 	public abstract void onReadReceiptReceived(Message msg);
-	public abstract void onFriendPickerReceived(Message msg);
+	public abstract void onFriendPickerReceived(FriendPickerMessage msg);
 	
-	public void onMessageReceived(String data) {
+	public final void onMessageReceived(String data) {
 		
 		JsonParser jp = new JsonParser();
 	    JsonElement root = jp.parse(data); 
@@ -43,7 +52,7 @@ public abstract class KikBot {
 	    for(int i = 0; i < msgObject.size(); i++) {
 	    	JsonObject obj = (JsonObject) msgObject.get(i);
 	    	
-		    MessageType type = MessageType.valueOf(obj.get("type").getAsString().replaceAll("-", "").toUpperCase());
+		    MessageType type = MessageType.valueOf(obj.get("type").getAsString().replaceAll("-", "_").toUpperCase());
 
 		    String from = obj.get("from").getAsString();
 		    String id = obj.get("id").getAsString();
@@ -63,118 +72,96 @@ public abstract class KikBot {
 			case TEXT:
 			    String body = obj.get("body").getAsString();
 			    
-			    TextMessage textMessage = new TextMessage(chat, timestamp, mention, readReceiptRequested, type, id, body);
+			    TextMessage textMessage = new TextMessage(chat, timestamp, mention, readReceiptRequested, id, body);
 			    
 			    onTextReceived(textMessage);
 				break;
 				
 			case LINK:
+				String url = obj.get("url").getAsString();
+				String text = obj.get("text").getAsString();
 				
+				JsonObject objAttr = (JsonObject) obj.get("attribution");
+			    MessageAttribute at = new MessageAttribute(objAttr.get("iconUrl").getAsString(), objAttr.get("style").getAsString(), objAttr.get("name").getAsString());
+			    //TODO bedtijd... todo: in de kikapi KikBot... bots toevoegen en ze met x-kik-signature uit elkaar houdenleuK!
+				LinkMessage linkMessage = new LinkMessage(chat, timestamp, mention, readReceiptRequested, id, at, url, readReceiptRequested, text);
+				onLinkReceived(linkMessage);
 				break;
 				
 			case PICTURE:
-			    String pictureUrl = obj.get("pictureUrl").getAsString();
+			    String pictureUrl = obj.get("picUrl").getAsString();
 			    
-			    MessageAttribute at = new MessageAttribute("", "", "");
-			    PictureMessage pictureMessage = new PictureMessage(chat, timestamp, mention, readReceiptRequested, type, id, at, pictureUrl);
+			    objAttr = (JsonObject) obj.get("attribution");
+			    at = new MessageAttribute(objAttr.get("iconUrl").getAsString(), objAttr.get("style").getAsString(), objAttr.get("name").getAsString());
+			    PictureMessage pictureMessage = new PictureMessage(chat, timestamp, mention, readReceiptRequested, id, at, pictureUrl);
 			    
 			    onPictureReceived(pictureMessage);
 				break;
 				
 			case VIDEO:
 			    String videoUrl = obj.get("body").getAsString();
-			    
-			    at = new MessageAttribute("", "", "");
-			    VideoMessage videoMessage = new VideoMessage(chat, timestamp, mention, readReceiptRequested, type, id, at, videoUrl);
+
+			    objAttr = (JsonObject) obj.get("attribution");
+			    at = new MessageAttribute(objAttr.get("iconUrl").getAsString(), objAttr.get("style").getAsString(), objAttr.get("name").getAsString());
+			    VideoMessage videoMessage = new VideoMessage(chat, timestamp, mention, readReceiptRequested, id, at, videoUrl);
 			    
 			    onVideoReceived(videoMessage);
 				break;
 				
-			case STARTCHATTING:
-
+			case START_CHATTING:
+			    body = obj.get("body").getAsString();
+			    
+			    textMessage = new TextMessage(chat, timestamp, mention, readReceiptRequested, id, body);
+			    
+			    onStartChattingReceived(textMessage);
 				break;
 				
-			case SCANDATA:
-
+			case SCAN_DATA:
+			    JsonObject dataObj = (JsonObject) obj.get("data");
+			    String referrer = dataObj.has("referrer") ? dataObj.get("referrer").getAsString() : null;
+			    int storeId = dataObj.has("store_id") ? dataObj.get("store_id").getAsInt() : -1;
+			    
+			    ScanDataMessage scanDataMessage = new ScanDataMessage(chat, timestamp, mention, readReceiptRequested, id, referrer, storeId);
+			    
+			    onScanDataReceived(scanDataMessage);
 				break;
 				
 			case STICKER:
-
+			    String stickerUrl = obj.get("stickerUrl").getAsString();
+			    long stickerPackId = obj.get("stickerPackId").getAsLong();
+			    
+			    StickerMessage stickerMessage = new StickerMessage(chat, timestamp, mention, readReceiptRequested, id, stickerUrl, stickerPackId);
+			    
+			    onStickerReceived(stickerMessage);
 				break;
 				
-			case ISTYPING:
+			case IS_TYPING:
 			    boolean isTyping = obj.get("isTyping").getAsBoolean();
 			    
-			    IsTypingMessage isTypingMessage = new IsTypingMessage(chat, timestamp, mention, readReceiptRequested, type, id, isTyping);
+			    IsTypingMessage isTypingMessage = new IsTypingMessage(chat, timestamp, mention, readReceiptRequested, id, isTyping);
 			    
 			    onIsTypingReceived(isTypingMessage);
 				break;
 				
-			case DELIVERYRECEIPT:
+			case DELIVERY_RECEIPT:
 
 				break;
 				
-			case READRECEIPT:
+			case READ_RECEIPT:
 
 				break;
 				
-			case FRIENDPICKER:
-
+			case FRIEND_PICKER:
+			    ArrayList<String> picked = new Gson().fromJson(obj.get("picked"), listType);
+			    
+			    FriendPickerMessage friendPickerMessage = new FriendPickerMessage(chat, timestamp, mention, readReceiptRequested, id, picked);
+			    
+			    onFriendPickerReceived(friendPickerMessage);
 				break;
 				
 			}		    
 		    
-//		    Message msg = new Message(chat, body, timestamp, mention, readReceiptRequested, type, id);
-			System.out.println(type);
 	    }
-		
-//		switch(msg.getType()) {
-//		
-//		case TEXT:
-//			onTextReceived(msg);
-//			break;
-//			
-//		case LINK:
-//			onLinkReceived(msg);
-//			break;
-//			
-//		case PICTURE:
-//			onPictureReceived(msg);
-//			break;
-//			
-//		case VIDEO:
-//			onVideoReceived(msg);
-//			break;
-//			
-//		case STARTCHATTING:
-//			onStartChattingReceived(msg);
-//			break;
-//			
-//		case SCANDATA:
-//			onScanDataReceived(msg);
-//			break;
-//			
-//		case STICKER:
-//			onStickerReceived(msg);
-//			break;
-//			
-//		case ISTYPING:
-//			onIsTypingReceived(msg);
-//			break;
-//			
-//		case DELIVERYRECEIPT:
-//			onDeliveryReceiptReceived(msg);
-//			break;
-//			
-//		case READRECEIPT:
-//			onReadReceiptReceived(msg);
-//			break;
-//			
-//		case FRIENDPICKER:
-//			onFriendPickerReceived(msg);
-//			break;
-//			
-//		}
 		
 	}
 

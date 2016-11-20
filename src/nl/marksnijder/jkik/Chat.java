@@ -1,7 +1,6 @@
 package nl.marksnijder.jkik;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import lombok.Getter;
 
