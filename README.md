@@ -1,6 +1,6 @@
 # JKik
 ---
-A complete easy to use wrapper for the kik api.
+A complete easy to use java wrapper for the kik api.
 
 ###The basics
 ```
@@ -34,7 +34,6 @@ public class TestBot extends KikBot {
 ```
 
 #Sending messages
-
 There are quite a few messages you can send.
 * TextMessage
 * PictureMessage
@@ -44,7 +43,7 @@ There are quite a few messages you can send.
 
 To send the message it's recommended to use the shorter constructors of the classes as they are all you need to send a message.
 
-**Note: Including a chat id is optional if you're sending to the user directly, and not a group chat.**
+**Note: Including a chat id is optional if you're sending to the user directly. However it should be included when sending messages to groupchats**
 ```
 new TextMessage("hey", msg.getChat().getFrom(), msg.getChat().getChatId())
 ```
@@ -123,4 +122,11 @@ You can add multiple keyboards to a message. This way you can have unique keyboa
 ```
 new TextMessage("hey", msg.getChat().getFrom(), msg.getChat().getChatId()).setKeyboards(keyboard1, keyboard2, keyboard3...);
 ```
+
+#Download
+[Releases](https://github.com/msnijder30/JKik/releases/)
+
+#More information
+You can find more information here
+[Official kik docs](https://dev.kik.com/#/docs/getting-started)
 
