@@ -127,6 +127,7 @@ new TextMessage("hey", msg.getChat().getFrom(), msg.getChat().getChatId()).setKe
 [Releases](https://github.com/msnijder30/JKik/releases/)
 
 #More information
-You can find more information here
+You can find more information here:
+
 [Official kik docs](https://dev.kik.com/#/docs/getting-started)
 
