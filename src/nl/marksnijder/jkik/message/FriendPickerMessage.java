@@ -2,12 +2,8 @@ package nl.marksnijder.jkik.message;
 
 import java.util.ArrayList;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import lombok.Getter;
 import nl.marksnijder.jkik.Chat;
-import nl.marksnijder.jkik.keyboard.Keyboard;
 
 public class FriendPickerMessage extends Message {
 	

@@ -2,7 +2,6 @@ package nl.marksnijder.jkik.message;
 
 import lombok.Getter;
 import nl.marksnijder.jkik.Chat;
-import nl.marksnijder.jkik.KikApi;
 
 public class ScanDataMessage extends Message {
 

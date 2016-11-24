@@ -7,7 +7,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import lombok.Getter;
-import lombok.Setter;
 import nl.marksnijder.jkik.Chat;
 import nl.marksnijder.jkik.KikApi;
 import nl.marksnijder.jkik.keyboard.Keyboard;

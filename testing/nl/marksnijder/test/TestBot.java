@@ -3,11 +3,7 @@ package nl.marksnijder.test;
 import java.io.File;
 
 import nl.marksnijder.jkik.KikBot;
-import nl.marksnijder.jkik.KikFiles;
 import nl.marksnijder.jkik.MessageSender;
-import nl.marksnijder.jkik.keyboard.FriendPicker;
-import nl.marksnijder.jkik.keyboard.Keyboard;
-import nl.marksnijder.jkik.keyboard.TextButton;
 import nl.marksnijder.jkik.message.FriendPickerMessage;
 import nl.marksnijder.jkik.message.IsTypingMessage;
 import nl.marksnijder.jkik.message.LinkMessage;

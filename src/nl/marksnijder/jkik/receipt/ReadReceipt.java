@@ -1,6 +1,5 @@
 package nl.marksnijder.jkik.receipt;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

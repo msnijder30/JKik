@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 import nl.marksnijder.jkik.KikApi;
@@ -33,7 +32,7 @@ public class KikServerConnection extends Thread {
 	@Override
 	public void run() {
 		try {
-			System.out.println("new connection from " + socket.getInetAddress());
+			System.out.println("New connection from " + socket.getInetAddress());
 			BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
 			String methodType = "";
@@ -62,7 +61,6 @@ public class KikServerConnection extends Thread {
 					methodType = "POST";
 				}
 				
-				System.out.println(line);
 				if(line.isEmpty()) {
 					for(int i = 0; i < contentLength; i++) {
 						socketData.append((char)reader.read());

@@ -31,7 +31,6 @@ public class KikServer extends Thread {
 				e.printStackTrace();
 			}
 			
-			
 		}
 		
 		try {

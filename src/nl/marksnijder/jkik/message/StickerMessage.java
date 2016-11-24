@@ -1,10 +1,7 @@
 package nl.marksnijder.jkik.message;
 
-import java.util.HashMap;
-
 import lombok.Getter;
 import nl.marksnijder.jkik.Chat;
-import nl.marksnijder.jkik.KikApi;
 
 public class StickerMessage extends Message {
 

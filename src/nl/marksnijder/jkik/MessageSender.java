@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import nl.marksnijder.jkik.message.Sendable;
-import nl.marksnijder.jkik.receipt.ReadReceipt;
 
 public class MessageSender {
 	
