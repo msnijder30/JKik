@@ -42,27 +42,23 @@ There are quite a few messages you can send.
 * LinkMessage
 * ReadReceipt
 
-To send the message it's recommended to use the shorter constructors of the classes as they are all you need to send a message.
-
-**Note: Including a chat id is optional if you're sending to the user directly. However it should be included when sending messages to groupchats**
-```
-new TextMessage("hey")
-```
-
 Replying messages to users:
 
-**Note: The shortest constructor of the messages can be used here.
+**Note: The shortest constructor of the messages can be used here.**
 ```
 @Override
 public void onTextReceived(TextMessage msg) {
+	TextMessage message1 = new TextMessage("hey");
 	msg.sendReply(message1, message2...);
 }
 ```
+
 
 Sending messages to users:
 
 **Note: To send messages to users you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
 ```
+TextMessage message1 = new TextMessage("hey", to, chatId);
 MessageSender.sendMessages(message1, message2...);
 ```
 
@@ -70,6 +66,7 @@ Broadcasting messages to users:
 
 **Note: To broadcast messages to users you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
 ```
+TextMessage message1 = new TextMessage("hey", to, chatId);
 MessageSender.broadcastMessages(message1, message2...);
 ```
 
@@ -78,8 +75,13 @@ You can choose to send pictures from the local system or from url. Currently you
 ```
 new PictureMessage(getApi(), new File("pic.png"));
 
+//Use when not replying to a message but sending it with MessageSender instead
+new PictureMessage(getApi(), new File("pic.png"), to, chatId);
 
 new PictureMessage("http://example.com/picture.jpg");
+
+//Use when not replying to a message but sending it with MessageSender instead
+new PictureMessage("http://example.com/picture.jpg", to, chatId);
 ```
 
 It's also possible to send the pictures as camera, or you can choose for a custom thumbnail and name.
@@ -94,6 +96,9 @@ Supported message types:
 MessageAttribute attr = new MessageAttribute("http://s.imgur.com/images/favicon-96x96.png", "custommessage");
 
 new PictureMessage("http://example.com/picture.jpg", attr);
+
+//Use when not replying to a message but sending it with MessageSender instead
+new PictureMessage("http://example.com/picture.jpg", to, chatId, attr);
 ```
 
 
@@ -104,6 +109,9 @@ Supported message types:
 * VideoMessage
 ```
 new PictureMessage("http://example.com/picture.jpg", attr).setSendAsCamera(true);
+
+//Use when not replying to a message but sending it with MessageSender instead
+new PictureMessage("http://example.com/picture.jpg", , to, chatId, attr).setSendAsCamera(true);
 ```
 
 #Keyboards
@@ -116,7 +124,6 @@ To create a keyboard you need to add buttons to it. Supported buttons are:
 
 ```
 //The variable preselected is a list of users that are preselected when picking friends, you can remove this field if you desire.
-
 FriendPicker picker = new FriendPicker("message", min, max, preselected);
 ```
 and text buttons:
@@ -136,6 +143,9 @@ It's also possible to show the keyboard to a specific user. `kb.setTo("username"
 You can add multiple keyboards to a message. This way you can have unique keyboards for every user in a chat.
 ```
 new TextMessage("hey").setKeyboards(keyboard1, keyboard2, keyboard3...);
+
+//Use when not replying to a message but sending it with MessageSender instead
+new TextMessage("hey", to, chatId).setKeyboards(keyboard1, keyboard2, keyboard3...);
 ```
 
 #Download
