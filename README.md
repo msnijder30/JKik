@@ -1,6 +1,6 @@
 # JKik
----
 A complete easy to use java wrapper for the kik api.
+---
 
 ###The basics
 ```
