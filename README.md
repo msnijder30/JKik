@@ -27,6 +27,7 @@ public class TestBot extends KikBot {
 		msg.getId();
 		msg.getMention();
 		msg.getTimestamp();	
+		msg.sendReply(msg1, msg2, msg3...);
 	}
   
 	...
@@ -45,15 +46,26 @@ To send the message it's recommended to use the shorter constructors of the clas
 
 **Note: Including a chat id is optional if you're sending to the user directly. However it should be included when sending messages to groupchats**
 ```
-new TextMessage("hey", msg.getChat().getFrom(), msg.getChat().getChatId())
+new TextMessage("hey")
+```
+
+Replying messages to users:
+**Note: The shortest constructor of the messages can be used here.
+```
+@Override
+public void onTextReceived(TextMessage msg) {
+	msg.sendReply(message1, message2...);
+}
 ```
 
 Sending messages to users:
+**Note: To send messages to users you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
 ```
 MessageSender.sendMessages(message1, message2...);
 ```
 
 Broadcasting messages to users:
+**Note: To broadcast messages to users you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
 ```
 MessageSender.broadcastMessages(message1, message2...);
 ```
@@ -61,10 +73,10 @@ MessageSender.broadcastMessages(message1, message2...);
 #Sending media
 You can choose to send pictures from the local system or from url. Currently you can only send videos and gifs from urls.
 ```
-new PictureMessage(getApi(), new File("pic.png"), msg.getChat().getFrom(), msg.getChat().getChatId());
+new PictureMessage(getApi(), new File("pic.png"));
 
 
-new PictureMessage("http://example.com/picture.jpg", msg.getChat().getFrom(), msg.getChat().getChatId());
+new PictureMessage("http://example.com/picture.jpg");
 ```
 
 It's also possible to send the pictures as camera, or you can choose for a custom thumbnail and name.
@@ -78,7 +90,7 @@ Supported message types:
 ```
 MessageAttribute attr = new MessageAttribute("http://s.imgur.com/images/favicon-96x96.png", "custommessage");
 
-new PictureMessage("http://example.com/picture.jpg", msg.getChat().getFrom(), msg.getChat().getChatId(), attr);
+new PictureMessage("http://example.com/picture.jpg", attr);
 ```
 
 
@@ -88,7 +100,7 @@ Supported message types:
 * PictureMessage
 * VideoMessage
 ```
-new PictureMessage("http://example.com/picture.jpg", msg.getChat().getFrom(), msg.getChat().getChatId(), attr).setSendAsCamera(true);
+new PictureMessage("http://example.com/picture.jpg", attr).setSendAsCamera(true);
 ```
 
 #Keyboards
@@ -120,7 +132,7 @@ It's also possible to show the keyboard to a specific user. `kb.setTo("username"
 ###Adding the keyboard to a message
 You can add multiple keyboards to a message. This way you can have unique keyboards for every user in a chat.
 ```
-new TextMessage("hey", msg.getChat().getFrom(), msg.getChat().getChatId()).setKeyboards(keyboard1, keyboard2, keyboard3...);
+new TextMessage("hey").setKeyboards(keyboard1, keyboard2, keyboard3...);
 ```
 
 #Download
