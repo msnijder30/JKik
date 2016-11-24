@@ -15,7 +15,7 @@ public static void main(String[] args) throws Exception {
 ```
 
 ####Optional
-The KikSettings dataclass allows you to set the settings for:
+The `KikSettings` dataclass allows you to set the settings for:
 * manually sending read receipts
 * receiving read receipts
 * receive delivery receipts
@@ -29,7 +29,7 @@ KikApi api = new KikApi(username, key, 8080, new TestBot(), settings);
 
 #Receiving messages
 
-Simply create a class and let it extend KikBot. You'll be prompted to add the unimplemented methods, and you're ready to go!
+Simply create a class and let it extend `KikBot`. You'll be prompted to add the unimplemented methods, and you're ready to go!
 
 
 ###A basic bot
@@ -51,11 +51,11 @@ public class TestBot extends KikBot {
 
 #Sending messages
 There are quite a few messages you can send.
-* TextMessage
-* PictureMessage
-* VideoMessage
-* LinkMessage
-* ReadReceipt
+* `TextMessage`
+* `PictureMessage`
+* `VideoMessage`
+* `LinkMessage`
+* `ReadReceipt`
 
 Replying messages to users:
 
@@ -99,14 +99,14 @@ new PictureMessage("http://example.com/picture.jpg");
 new PictureMessage("http://example.com/picture.jpg", to, chatId);
 ```
 
-It's also possible to send the pictures as camera, or you can choose for a custom thumbnail and name.
+It's also possible to send the pictures as camera, or you can choose a custom thumbnail and name.
 
 ###Custom everything
 
 Supported message types:
-* PictureMessage
-* VideoMessage
-* LinkMessage
+* `PictureMessage`
+* `VideoMessage`
+* `LinkMessage`
 ```java
 MessageAttribute attr = new MessageAttribute("http://s.imgur.com/images/favicon-96x96.png", "custommessage");
 
@@ -120,8 +120,8 @@ new PictureMessage("http://example.com/picture.jpg", to, chatId, attr);
 ###Send as camera
 
 Supported message types:
-* PictureMessage
-* VideoMessage
+* `PictureMessage`
+* `VideoMessage`
 ```java
 new PictureMessage("http://example.com/picture.jpg", attr).setSendAsCamera(true);
 
@@ -129,13 +129,23 @@ new PictureMessage("http://example.com/picture.jpg", attr).setSendAsCamera(true)
 new PictureMessage("http://example.com/picture.jpg", , to, chatId, attr).setSendAsCamera(true);
 ```
 
+###Send manual read receipts
+Make sure you've enabled manually sending read receipts in the `KikConfig` and instantiated the `KikApi` with it.
+
+The id's in the read receipt constructor are the id's of the messages you want to read.
+```java
+ReadReceipt read = new ReadReceipt(id1, id2, id3, id4);
+MessageSender.sendMessages(read);
+
+```
+
 #Keyboards
 Ofcourse, it's also possible to add keyboards to your messages. 
 
 ###Buttons
 To create a keyboard you need to add buttons to it. Supported buttons are:
-* TextButton
-* FriendPicker
+* `TextButton`
+* `FriendPicker`
 
 ```java
 //The variable preselected is a list of users that are preselected when picking friends, you can remove this field if you desire.
