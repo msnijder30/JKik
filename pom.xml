@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>JKik</groupId>
   <artifactId>JKik</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>Without-Dependencies-V1.0</version>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -25,6 +25,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <finalName>JKik-With-Dependencies-V1.0</finalName>                   
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <mainClass>com.group.id.Launcher1</mainClass>
