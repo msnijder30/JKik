@@ -66,6 +66,9 @@ public class PictureMessage extends Sendable {
 		this.attribution = attr;
 	}
 	
+	/**
+	 * Use this constructor only when using the message in the {@link nl.marksnijder.jkik.message.Message#sendReply(Sendable...)}
+	 */
 	public PictureMessage(String url, MessageAttribute attr) {
 		super(MessageType.PICTURE);
 		this.pictureUrl = url;

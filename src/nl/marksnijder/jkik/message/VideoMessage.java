@@ -57,9 +57,25 @@ public class VideoMessage extends Sendable {
 		this.videoUrl = url;
 	}
 	
+	public VideoMessage(KikApi api, File pic, String to, String chatId, MessageAttribute attr) {
+		super(to, MessageType.VIDEO, chatId);
+		
+		UUID uuid = api.getFiles().addFile(pic);
+		this.videoUrl = api.getFiles().getPublicFileUrl(uuid);
+		this.attribution = attr;
+	}
+	
 	public VideoMessage(String url, String to, String chatId, MessageAttribute attr) {
 		super(to, MessageType.VIDEO, chatId);
 		this.videoUrl = url;
+		this.attribution = attr;
+	}
+	
+	public VideoMessage(KikApi api, File pic, MessageAttribute attr) {
+		super(MessageType.VIDEO);
+		
+		UUID uuid = api.getFiles().addFile(pic);
+		this.videoUrl = api.getFiles().getPublicFileUrl(uuid);
 		this.attribution = attr;
 	}
 	
@@ -70,6 +86,16 @@ public class VideoMessage extends Sendable {
 		super(MessageType.VIDEO);
 		this.videoUrl = url;
 		this.attribution = attr;
+	}
+	
+	/**
+	 * Use this constructor only when using the message in the {@link nl.marksnijder.jkik.message.Message#sendReply(Sendable...)}
+	 */
+	public VideoMessage(KikApi api, File pic) {
+		super(MessageType.VIDEO);
+		
+		UUID uuid = api.getFiles().addFile(pic);
+		this.videoUrl = api.getFiles().getPublicFileUrl(uuid);
 	}
 
 	/**
