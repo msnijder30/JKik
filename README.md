@@ -4,14 +4,29 @@ A complete easy to use java wrapper for the kik api.
 
 ###The basics
 ```java
-//Initialise the bot
-KikApi api = new KikApi(username, key, 8080, new TestBot());
-api.start();
-		
-//Get user information
-User user = api.getUserInfo("username");
+public static void main(String[] args) throws Exception { 
+	//Initialise the bot
+	KikApi api = new KikApi(username, key, 8080, new TestBot());
+	api.start();
 
+	//Get user information
+	User user = api.getUserInfo("username");
+}
 ```
+
+####Optional
+The KikSettings dataclass allows you to set the settings for:
+* manually sending read receipts
+* receiving read receipts
+* receive delivery receipts
+* receive is typing receipts
+
+Simply instantiate the KikApi like this:
+```java
+KikSettings settings = new KikSettings(true, true, true, true);
+KikApi api = new KikApi(username, key, 8080, new TestBot(), settings);
+```
+
 #Receiving messages
 
 Simply create a class and let it extend KikBot. You'll be prompted to add the unimplemented methods, and you're ready to go!
