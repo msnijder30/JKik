@@ -220,7 +220,7 @@ You can find more information here:
 [Official kik docs](https://dev.kik.com/#/docs/getting-started)
 
 This project uses the following libraries:
-[Google Gson](https://github.com/google/gson)
-[Lombok](https://projectlombok.org/)
+* [Google Gson](https://github.com/google/gson)
+* [Lombok](https://projectlombok.org/)
 
 
