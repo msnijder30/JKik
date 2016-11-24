@@ -23,5 +23,4 @@ public enum MessageType {
 		this.type = type;
 	}
 	
-	//MessageType.valueOf("text");
 }

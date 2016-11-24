@@ -9,12 +9,12 @@ import java.net.URL;
 import java.util.Base64;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.marksnijder.jkik.keyboard.Keyboard;
 import nl.marksnijder.jkik.thread.KikServer;
 
 public class KikApi {
@@ -42,6 +42,9 @@ public class KikApi {
 	@Getter
 	private KikFiles files;
 	
+	@Getter
+	private Keyboard staticKeyboard;
+	
 	public static final String URL = "https://api.kik.com/v1/";
 	
 	public static final String CONFIG_URL = URL + "config";
@@ -51,20 +54,28 @@ public class KikApi {
 	
 	
 	public KikApi(String username, String apiKey, int port, KikBot bot) {
-		this(username, apiKey, port, bot, null);
+		this(username, apiKey, port, bot, null, null);
 	}
-
 	
+	public KikApi(String username, String apiKey, int port, KikBot bot, Keyboard staticKeyboard) {
+		this(username, apiKey, port, bot, null, staticKeyboard);
+	}
+	
+
 	public KikApi(String username, String apiKey, int port, KikBot bot, KikSettings settings) {
+		this(username, apiKey, port, bot, settings, null);
+	}
+	
+	public KikApi(String username, String apiKey, int port, KikBot bot, KikSettings settings, Keyboard staticKeyboard) {
 		this.username = username;
 		this.apiKey = apiKey;
 		this.port = port;
 		this.settings = settings == null ? new KikSettings(false, false, false, false) : settings;
 		this.files = new KikFiles(this);
+		this.staticKeyboard = staticKeyboard;
 		this.bot = bot;
 		this.bot.setApi(this);
 		publicIP = Utils.getPublicIP();
-		createConnection();
 		MessageSender.setApi(this);
 	}
 	
@@ -93,6 +104,10 @@ public class KikApi {
 
 		finalObject.add("features", object);
 		
+		if(staticKeyboard != null) {
+			finalObject.add("staticKeyboard", staticKeyboard.toJsonObject());
+		}
+		
 		executePost(CONFIG_URL, new Gson().toJson(finalObject), MethodType.POST);
 		
 		server = new KikServer(this);
@@ -102,6 +117,9 @@ public class KikApi {
 	}
 	
 	public String executePost(String targetURL, String urlParameters, MethodType type) {
+		System.out.println("Attempting to send " + type.toString() + " request!");
+		System.out.println(urlParameters);
+		
 		HttpURLConnection connection = null;
 		
 		try {
@@ -135,6 +153,10 @@ public class KikApi {
 			  response.append('\r');
 			}
 			
+			System.out.println("Response code: " + connection.getResponseCode());
+			System.out.println("Response:");
+			System.out.println(response);
+			
 			rd.close();
 			return response.toString();
 
@@ -146,6 +168,11 @@ public class KikApi {
 		      connection.disconnect();
 			  }
 		  }
+	}
+
+
+	public void start() {
+		createConnection();
 	}
 
 	

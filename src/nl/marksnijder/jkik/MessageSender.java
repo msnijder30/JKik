@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import nl.marksnijder.jkik.message.Sendable;
+import nl.marksnijder.jkik.receipt.ReadReceipt;
 
 public class MessageSender {
 	
@@ -21,23 +22,20 @@ public class MessageSender {
 	 * @param messages An array of messages
 	 */
 	public static void broadcastMessages(Sendable... messages) {
-		sendMessage(KikApi.BROADCAST_URL, messages);
+		sendMessages(KikApi.BROADCAST_URL, messages);
 	}
 	
-	public static void sendMessage(Sendable... messages) {
-		sendMessage(KikApi.MESSAGE_URL, messages);
+	public static void sendMessages(Sendable... messages) {
+		sendMessages(KikApi.MESSAGE_URL, messages);
 	}
 	
-	private static void sendMessage(String url, Sendable... messages) {
+	private static void sendMessages(String url, Sendable... messages) {
 		JsonObject toSend = new JsonObject();
 		JsonArray msgArray = new JsonArray();
-
-		System.out.println("SENDING MESSAGES!!!");
 		
 		for(Sendable msg : messages) {
-			JsonObject jsonData = msg.getJsonData();
+			JsonObject jsonData = msg.toJsonObject();
 			msgArray.add(jsonData);
-			System.out.println(jsonData);
 		}
 		toSend.add("messages", msgArray);
 		

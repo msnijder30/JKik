@@ -2,8 +2,8 @@ package nl.marksnijder.test;
 
 import java.io.File;
 
-import nl.marksnijder.jkik.KikApi;
 import nl.marksnijder.jkik.KikBot;
+import nl.marksnijder.jkik.KikFiles;
 import nl.marksnijder.jkik.MessageSender;
 import nl.marksnijder.jkik.keyboard.FriendPicker;
 import nl.marksnijder.jkik.keyboard.Keyboard;
@@ -12,9 +12,9 @@ import nl.marksnijder.jkik.message.FriendPickerMessage;
 import nl.marksnijder.jkik.message.IsTypingMessage;
 import nl.marksnijder.jkik.message.LinkMessage;
 import nl.marksnijder.jkik.message.Message;
+import nl.marksnijder.jkik.message.MessageAttribute;
 import nl.marksnijder.jkik.message.PictureMessage;
 import nl.marksnijder.jkik.message.ScanDataMessage;
-import nl.marksnijder.jkik.message.Sendable;
 import nl.marksnijder.jkik.message.StickerMessage;
 import nl.marksnijder.jkik.message.TextMessage;
 import nl.marksnijder.jkik.message.VideoMessage;
@@ -23,11 +23,8 @@ public class TestBot extends KikBot {
 	
 	@Override
 	public void onTextReceived(TextMessage msg) {
-		System.out.println("text");
-		Keyboard keyboard = new Keyboard(/*(new TextButton("button1"), new TextButton("button2"), */new FriendPicker("Choose 2-4 Friends", 2, 4)/**/);
-//		keyboard.setTo(msg.getChat().getFrom());
-//		keyboard.setHidden(true);
-			MessageSender.sendMessage((Sendable)new TextMessage("This is a test msg", msg.getChat().getFrom(), msg.getChat().getChatId()).setKeyboard(keyboard));
+		
+		MessageSender.sendMessages(new TextMessage("hey", msg.getChat().getFrom(), msg.getChat().getChatId()));
 	}
 
 	@Override
@@ -38,8 +35,7 @@ public class TestBot extends KikBot {
 
 	@Override
 	public void onPictureReceived(PictureMessage msg) {
-		MessageSender.sendMessage(new PictureMessage(getApi(), new File("pic.png"), msg.getChat().getFrom(), msg.getChat().getChatId()));
-//			MessageSender.sendMessage(new PictureMessage("https://picturethismaths.files.wordpress.com/2016/03/fig6bigforblog.png?w=419&h=364", msg.getChat().getFrom(), msg.getChat().getChatId()));
+		MessageSender.sendMessages(new PictureMessage(getApi(), new File("pic.png"), msg.getChat().getFrom(), msg.getChat().getChatId(), new MessageAttribute("http://s.imgur.com/images/favicon-96x96.png", null, null)));
 	}
 
 	@Override

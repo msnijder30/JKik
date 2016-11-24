@@ -83,8 +83,8 @@ public abstract class KikBot {
 				
 				JsonObject objAttr = (JsonObject) obj.get("attribution");
 			    MessageAttribute at = new MessageAttribute(objAttr.get("iconUrl").getAsString(), objAttr.get("style").getAsString(), objAttr.get("name").getAsString());
-			    //TODO bedtijd... todo: in de kikapi KikBot... bots toevoegen en ze met x-kik-signature uit elkaar houdenleuK!
-				LinkMessage linkMessage = new LinkMessage(chat, timestamp, mention, readReceiptRequested, id, at, url, readReceiptRequested, text);
+
+			    LinkMessage linkMessage = new LinkMessage(chat, timestamp, mention, readReceiptRequested, id, at, url, readReceiptRequested, text);
 				onLinkReceived(linkMessage);
 				break;
 				

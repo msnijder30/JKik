@@ -1,12 +1,18 @@
 package nl.marksnijder.jkik.message;
 
+import java.io.File;
+import java.util.UUID;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import lombok.Getter;
 import lombok.Setter;
 import nl.marksnijder.jkik.Chat;
+import nl.marksnijder.jkik.KikApi;
+import nl.marksnijder.jkik.keyboard.Keyboard;
 
-public class VideoMessage extends Message implements Sendable {
+public class VideoMessage extends Sendable {
 	
 	@Getter
 	private MessageAttribute attribution;
@@ -25,22 +31,94 @@ public class VideoMessage extends Message implements Sendable {
 
 	@Getter @Setter
 	private boolean noSave;
+	
+	@Getter
+	private boolean sendAsCamera;
 
+	/**
+	 * @deprecated Please use the other constructors as they have the arguments you need exactly. This constructor is mostly for internal use.
+	 */
+	@Deprecated
 	public VideoMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribution, String videoUrl) {
 		super(chat, timestamp, mention, readReceiptRequested, MessageType.VIDEO, id);
 		this.attribution = attribution;
 		this.videoUrl = videoUrl;
 	}
+	
+	public VideoMessage(KikApi api, File pic, String to, String chatId) {
+		super(to, MessageType.VIDEO, chatId);
+		
+		UUID uuid = api.getFiles().addFile(pic);
+		this.videoUrl = api.getFiles().getPublicFileUrl(uuid);
+	}
+	
+	public VideoMessage(String url, String to, String chatId) {
+		super(to, MessageType.VIDEO, chatId);
+		this.videoUrl = url;
+	}
+	
+	public VideoMessage(String url, String to, String chatId, MessageAttribute attr) {
+		super(to, MessageType.VIDEO, chatId);
+		this.videoUrl = url;
+		this.attribution = attr;
+	}
+	
+	/**
+	 * Use this constructor only when using the message in the {@link nl.marksnijder.jkik.message.Message#sendReply(Sendable...)}
+	 */
+	public VideoMessage(String url, MessageAttribute attr) {
+		super(MessageType.VIDEO);
+		this.videoUrl = url;
+		this.attribution = attr;
+	}
 
+	/**
+	 * Use this constructor only when using the message in the {@link nl.marksnijder.jkik.message.Message#sendReply(Sendable...)}
+	 */
+	public VideoMessage(String url) {
+		super(MessageType.VIDEO);
+		this.videoUrl = url;
+	}
+	
+	public VideoMessage setSendAsCamera(boolean value) {
+		sendAsCamera = value;
+		return this;
+	}
+	
+	/**
+	 * ChatId is apparently not necessary when you're private messaging someone.
+	 */
 	@Override
-	public JsonObject initSending() {
-		JsonObject obj = new JsonObject();
-		obj.addProperty("videoUrl", videoUrl);
-		obj.addProperty("loop", false);
-		obj.addProperty("muted", muted);
-		obj.addProperty("autoplay", autoplay);
-		obj.addProperty("noSave", noSave);
-		return obj;
+	public JsonObject toJsonObject() {
+		JsonObject params = new JsonObject();
+		params.addProperty("type", getType().getType());
+		params.addProperty("to", getChat().getFrom());
+		params.addProperty("chatId", getChat().getChatId());
+		params.addProperty("typeTime", getTypeTime() > 0 ? getTypeTime() : 0);
+		params.addProperty("delay", getDelay());
+
+		params.addProperty("videoUrl", videoUrl);
+		params.addProperty("loop", false);
+		params.addProperty("muted", muted);
+		params.addProperty("autoplay", autoplay);
+		params.addProperty("noSave", noSave);
+
+		if(this.attribution != null && !isSendAsCamera()) {
+			params.add("attribution", this.attribution.toJsonObject());
+		} else {
+			params.addProperty("attribution", isSendAsCamera() ? "camera" : "gallery");
+		}
+
+		JsonArray keyboards = new JsonArray();
+		if(getKeyboards() != null) {
+			for(Keyboard kb : getKeyboards()) {
+				keyboards.add(kb.toJsonObject());
+			}
+		}
+		
+		params.add("keyboards", keyboards);
+		
+		return params;
 	}
 
 }

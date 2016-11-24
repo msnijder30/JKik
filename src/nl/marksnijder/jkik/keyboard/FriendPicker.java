@@ -19,19 +19,21 @@ public class FriendPicker extends TextButton {
 	@Getter
 	private List<String> preselected;
 	
-	public FriendPicker(String body, int min, int max) {
+	public FriendPicker(String body, int min, int max) throws Exception {
 		this(body, min, max, null);
 	}
 	
-	public FriendPicker(String body, int min, int max, List<String> preselected) {
+	public FriendPicker(String body, int min, int max, List<String> preselected) throws Exception {
 		super(body, MessageType.FRIEND_PICKER);
+		if(min < 1 || max < 1 || min > 100 || max > 100 || min > max) {
+			throw new Exception("Invalid min or max variable");
+		}
 		this.max = max;
 		this.min = min;
 		this.preselected = preselected;
 	}
 	
 	public JsonObject getJson() {
-		System.out.println("Callling friendpicker  method");
 		JsonObject obj = super.getJson();
 		obj.addProperty("max", max);
 		obj.addProperty("min", min);

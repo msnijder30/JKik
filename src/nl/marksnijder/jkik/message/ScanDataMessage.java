@@ -17,7 +17,6 @@ public class ScanDataMessage extends Message {
 		super(chat, timestamp, mention, readReceiptRequested, MessageType.SCAN_DATA, id);
 		this.referrer = referrer;
 		this.storeId = storeId;
-		// TODO Auto-generated constructor stub
 	}
 
 }

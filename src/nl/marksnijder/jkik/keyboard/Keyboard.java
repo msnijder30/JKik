@@ -47,7 +47,7 @@ public class Keyboard {
 		return this;
 	}
 
-	public JsonObject getJson() {
+	public JsonObject toJsonObject() {
 		JsonObject obj = new JsonObject();
 		if(to != null && !to.isEmpty()) obj.addProperty("to", to);
 		obj.addProperty("type", type);

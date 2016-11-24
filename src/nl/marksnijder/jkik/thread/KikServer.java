@@ -3,7 +3,6 @@ package nl.marksnijder.jkik.thread;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import lombok.Getter;
 import nl.marksnijder.jkik.KikApi;
 
 public class KikServer extends Thread {
