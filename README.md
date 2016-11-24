@@ -15,6 +15,7 @@ public static void main(String[] args) throws Exception {
 ```
 
 ####Optional
+###Settings
 The `KikSettings` dataclass allows you to set the settings for:
 * manually sending read receipts
 * receiving read receipts
@@ -25,6 +26,25 @@ Simply instantiate the KikApi like this:
 ```java
 KikSettings settings = new KikSettings(true, true, true, true);
 KikApi api = new KikApi(username, key, 8080, new TestBot(), settings);
+```
+
+###Static keyboard
+
+For more about keyboards go to: 
+[Keyboards](#user-content-keyboards)
+
+```java
+KeyBoard kb = new KeyBoard(button1, button2, button3...);
+KikApi api = new KikApi(username, key, 8080, new TestBot(), kb);
+```
+
+####Both
+```java
+KikSettings settings = new KikSettings(true, true, true, true);
+KeyBoard kb = new KeyBoard(button1, button2, button3...);
+
+KikApi api = new KikApi(username, key, 8080, new TestBot(), settings, kb);
+
 ```
 
 #Receiving messages
