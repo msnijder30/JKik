@@ -14,6 +14,8 @@ import nl.marksnijder.jkik.message.ScanDataMessage;
 import nl.marksnijder.jkik.message.StickerMessage;
 import nl.marksnijder.jkik.message.TextMessage;
 import nl.marksnijder.jkik.message.VideoMessage;
+import nl.marksnijder.jkik.receipt.DeliveryReceipt;
+import nl.marksnijder.jkik.receipt.ReadReceipt;
 
 public class TestBot extends KikBot {
 	
@@ -59,13 +61,13 @@ public class TestBot extends KikBot {
 	}
 
 	@Override
-	public void onDeliveryReceiptReceived(Message msg) {
+	public void onDeliveryReceiptReceived(DeliveryReceipt msg) {
 		System.out.println("deliveryreceipt");
 		
 	}
 
 	@Override
-	public void onReadReceiptReceived(Message msg) {
+	public void onReadReceiptReceived(ReadReceipt msg) {
 		System.out.println("readreceipt");
 		
 	}

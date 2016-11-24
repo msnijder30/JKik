@@ -23,6 +23,8 @@ import nl.marksnijder.jkik.message.ScanDataMessage;
 import nl.marksnijder.jkik.message.StickerMessage;
 import nl.marksnijder.jkik.message.TextMessage;
 import nl.marksnijder.jkik.message.VideoMessage;
+import nl.marksnijder.jkik.receipt.DeliveryReceipt;
+import nl.marksnijder.jkik.receipt.ReadReceipt;
 
 public abstract class KikBot {
 	
@@ -37,8 +39,8 @@ public abstract class KikBot {
 	public abstract void onScanDataReceived(ScanDataMessage msg);
 	public abstract void onStickerReceived(StickerMessage msg);
 	public abstract void onIsTypingReceived(IsTypingMessage msg);
-	public abstract void onDeliveryReceiptReceived(Message msg);
-	public abstract void onReadReceiptReceived(Message msg);
+	public abstract void onDeliveryReceiptReceived(DeliveryReceipt msg);
+	public abstract void onReadReceiptReceived(ReadReceipt msg);
 	public abstract void onFriendPickerReceived(FriendPickerMessage msg);
 	
 	public final void onMessageReceived(String data) {
@@ -144,11 +146,19 @@ public abstract class KikBot {
 				break;
 				
 			case DELIVERY_RECEIPT:
-
+			    ArrayList<String> messageIds = new Gson().fromJson(obj.get("participants"), listType);	
+			    
+			    DeliveryReceipt deliveryReceipt = new DeliveryReceipt(chat, timestamp, mention, readReceiptRequested, type, id, messageIds);
+			    
+			    onDeliveryReceiptReceived(deliveryReceipt);
 				break;
 				
 			case READ_RECEIPT:
-
+			    messageIds = new Gson().fromJson(obj.get("participants"), listType);
+			    
+			    ReadReceipt readReceipt = new ReadReceipt(chat, timestamp, mention, readReceiptRequested, type, id, messageIds);
+			    
+			    onReadReceiptReceived(readReceipt);
 				break;
 				
 			case FRIEND_PICKER:
