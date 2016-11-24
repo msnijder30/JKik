@@ -50,6 +50,7 @@ new TextMessage("hey")
 ```
 
 Replying messages to users:
+
 **Note: The shortest constructor of the messages can be used here.
 ```
 @Override
@@ -59,12 +60,14 @@ public void onTextReceived(TextMessage msg) {
 ```
 
 Sending messages to users:
+
 **Note: To send messages to users you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
 ```
 MessageSender.sendMessages(message1, message2...);
 ```
 
 Broadcasting messages to users:
+
 **Note: To broadcast messages to users you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
 ```
 MessageSender.broadcastMessages(message1, message2...);
