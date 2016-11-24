@@ -2,7 +2,7 @@
 A complete easy to use java wrapper for the kik api.
 ---
 
-###The basics
+#The basics
 ```java
 public static void main(String[] args) throws Exception { 
 	//Initialise the bot
@@ -14,7 +14,7 @@ public static void main(String[] args) throws Exception {
 }
 ```
 
-####Optional
+##Optional
 ###Settings
 The `KikSettings` dataclass allows you to set the settings for:
 * manually sending read receipts
@@ -31,14 +31,14 @@ KikApi api = new KikApi(username, key, 8080, new TestBot(), settings);
 ###Static keyboard
 
 For more about keyboards go to: 
-[Keyboards](#user-content-keyboards)
+[Keyboards](#keyboards)
 
 ```java
 KeyBoard kb = new KeyBoard(button1, button2, button3...);
 KikApi api = new KikApi(username, key, 8080, new TestBot(), kb);
 ```
 
-####Both
+###Both
 ```java
 KikSettings settings = new KikSettings(true, true, true, true);
 KeyBoard kb = new KeyBoard(button1, button2, button3...);
@@ -69,6 +69,7 @@ public class TestBot extends KikBot {
 }
 ```
 
+
 #Sending messages
 There are quite a few messages you can send.
 * `TextMessage`
@@ -91,7 +92,7 @@ public void onTextReceived(TextMessage msg) {
 
 Sending messages to users:
 
-**Note: To send messages to users you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
+**Note: To send messages to groupchats you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
 ```java
 TextMessage message1 = new TextMessage("hey", to, chatId);
 MessageSender.sendMessages(message1, message2...);
@@ -99,11 +100,22 @@ MessageSender.sendMessages(message1, message2...);
 
 Broadcasting messages to users:
 
-**Note: To broadcast messages to users you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
+**Note: To broadcast messages to groupchats you HAVE TO use the constructor with the `to` and `chatId` parameters. The `chatId` is not required when you're not sending it in groupchats however.**
 ```java
 TextMessage message1 = new TextMessage("hey", to, chatId);
 MessageSender.broadcastMessages(message1, message2...);
 ```
+
+###Send manual read receipts
+Make sure you've enabled manually sending read receipts in the `KikConfig` and instantiated the `KikApi` with it.
+
+The id's in the read receipt constructor are the id's of the messages you want to read.
+```java
+ReadReceipt read = new ReadReceipt(id1, id2, id3, id4);
+MessageSender.sendMessages(read);
+
+```
+
 
 #Sending media
 You can choose to send pictures from the local system or from url. Currently you can only send videos and gifs from urls.
@@ -119,9 +131,9 @@ new PictureMessage("http://example.com/picture.jpg");
 new PictureMessage("http://example.com/picture.jpg", to, chatId);
 ```
 
-It's also possible to send the pictures as camera, or you can choose a custom thumbnail and name.
 
-###Custom everything
+###Custom
+It's also possible to send the pictures as camera, or you can choose a custom thumbnail and name using the `MessageAttribute` class.
 
 Supported message types:
 * `PictureMessage`
@@ -134,6 +146,18 @@ new PictureMessage("http://example.com/picture.jpg", attr);
 
 //Use when not replying to a message but sending it with MessageSender instead
 new PictureMessage("http://example.com/picture.jpg", to, chatId, attr);
+
+
+new VideoMessage("http://example.com/video.mp4", attr);
+
+//Use when not replying to a message but sending it with MessageSender instead
+new VideoMessage("http://example.com/video.mp4", to, chatId, attr);
+
+
+new LinkMessage("http://example.com/", attr);
+
+//Use when not replying to a message but sending it with MessageSender instead
+new LinkMessage("http://example.com/", to, chatId, attr);
 ```
 
 
@@ -149,15 +173,6 @@ new PictureMessage("http://example.com/picture.jpg", attr).setSendAsCamera(true)
 new PictureMessage("http://example.com/picture.jpg", , to, chatId, attr).setSendAsCamera(true);
 ```
 
-###Send manual read receipts
-Make sure you've enabled manually sending read receipts in the `KikConfig` and instantiated the `KikApi` with it.
-
-The id's in the read receipt constructor are the id's of the messages you want to read.
-```java
-ReadReceipt read = new ReadReceipt(id1, id2, id3, id4);
-MessageSender.sendMessages(read);
-
-```
 
 #Keyboards
 Ofcourse, it's also possible to add keyboards to your messages. 
@@ -193,11 +208,14 @@ new TextMessage("hey").setKeyboards(keyboard1, keyboard2, keyboard3...);
 new TextMessage("hey", to, chatId).setKeyboards(keyboard1, keyboard2, keyboard3...);
 ```
 
+
 #Download
 [Releases](https://github.com/msnijder30/JKik/releases/)
 
+
 #More information
 You can find more information here:
+
 
 [Official kik docs](https://dev.kik.com/#/docs/getting-started)
 
