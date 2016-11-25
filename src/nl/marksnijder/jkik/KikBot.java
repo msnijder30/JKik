@@ -81,12 +81,14 @@ public abstract class KikBot {
 				
 			case LINK:
 				String url = obj.get("url").getAsString();
-				String text = obj.get("text").getAsString();
+				String text = obj.has("text") && !obj.get("text").isJsonNull() ? obj.get("text").getAsString() : null;
+				
+				JsonObject dataAttr = obj.has("kikJsData") && !obj.get("kikJsData").isJsonNull() && obj.get("kikJsData").isJsonObject() ? obj.get("attribution").getAsJsonObject() : null;
 				
 				JsonObject objAttr = (JsonObject) obj.get("attribution");
 			    MessageAttribute at = new MessageAttribute(objAttr.get("iconUrl").getAsString(), objAttr.get("style").getAsString(), objAttr.get("name").getAsString());
 
-			    LinkMessage linkMessage = new LinkMessage(chat, timestamp, mention, readReceiptRequested, id, at, url, readReceiptRequested, text);
+			    LinkMessage linkMessage = new LinkMessage(chat, timestamp, mention, readReceiptRequested, id, at, url, readReceiptRequested, dataAttr, text);
 				onLinkReceived(linkMessage);
 				break;
 				

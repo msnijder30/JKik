@@ -20,16 +20,20 @@ public class LinkMessage extends Sendable {
 	
 	@Getter
 	private String text;
+	
+	@Getter
+	private JsonObject kikJsData;
 
 	/**
 	 * @deprecated Please use the other constructors as they have the arguments you need exactly. This constructor is mostly for internal use.
 	 */
 	@Deprecated
-	public LinkMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribute, String url, boolean noForward, String text) {
+	public LinkMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribute, String url, boolean noForward, JsonObject kikJsData, String text) {
 		super(chat, timestamp, mention, readReceiptRequested, MessageType.LINK, id);
 		this.attribute = attribute;
 		this.url = url;
 		this.noForward = noForward;
+		this.kikJsData = kikJsData;
 		this.text = text;
 	}
 	
