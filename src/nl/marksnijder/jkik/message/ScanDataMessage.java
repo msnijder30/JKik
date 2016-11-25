@@ -11,6 +11,8 @@ public class ScanDataMessage extends Message {
 	@Getter
 	private int storeId;
 	
+	@Getter
+	private String data;
 	
 	public ScanDataMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, String referrer, int storeId) {
 		super(chat, timestamp, mention, readReceiptRequested, MessageType.SCAN_DATA, id);
@@ -18,4 +20,9 @@ public class ScanDataMessage extends Message {
 		this.storeId = storeId;
 	}
 
+	public ScanDataMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, String data) {
+		super(chat, timestamp, mention, readReceiptRequested, MessageType.SCAN_DATA, id);
+		this.data = data;
+	}
+	
 }

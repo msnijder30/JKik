@@ -49,8 +49,9 @@ public class KikApi {
 	
 	public static final String CONFIG_URL = URL + "config";
 	public static final String MESSAGE_URL = URL + "message";
-	public static final String USER_URL = URL + "user/";
+	public static final String USER_URL = URL + "user";
 	public static final String BROADCAST_URL = URL + "broadcast";
+	public static final String CODE_URL = URL + "code";
 	
 	
 	public KikApi(String username, String apiKey, int port, KikBot bot) {
@@ -80,7 +81,7 @@ public class KikApi {
 	}
 	
 	public User getUserInfo(String username) {
-		String data = executePost(USER_URL + username, "", MethodType.GET);
+		String data = executePost(USER_URL + "/" + username, "", MethodType.GET);
 		JsonObject obj = new JsonParser().parse(data).getAsJsonObject();
 		
 	    String lastName = obj.get("lastName").getAsString();
@@ -89,6 +90,16 @@ public class KikApi {
 	    long profilePicLastModified = obj.get("profilePicLastModified").isJsonNull() ? null : obj.get("profilePicLastModified").getAsLong();
 	    
 	    return new User(firstName, lastName, profilePicUrl, profilePicLastModified);
+	}
+	
+	public String generateKikCodeUrl(String data, KikColor color) {
+		JsonObject obj = new JsonObject();
+		obj.addProperty("data", data);
+		
+		String result = executePost(CODE_URL, obj.toString(), MethodType.POST);
+		JsonParser parser = new JsonParser();
+		String resultId = parser.parse(result).getAsJsonObject().get("id").getAsString();
+		return CODE_URL + "/" + resultId + "?c=" + color.ordinal();
 	}
 	
 	

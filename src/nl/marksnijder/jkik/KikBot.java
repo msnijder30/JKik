@@ -119,13 +119,19 @@ public abstract class KikBot {
 				break;
 				
 			case SCAN_DATA:
-			    JsonObject dataObj = (JsonObject) obj.get("data");
-			    String referrer = dataObj.has("referrer") ? dataObj.get("referrer").getAsString() : null;
-			    int storeId = dataObj.has("store_id") ? dataObj.get("store_id").getAsInt() : -1;
-			    
-			    ScanDataMessage scanDataMessage = new ScanDataMessage(chat, timestamp, mention, readReceiptRequested, id, referrer, storeId);
-			    
-			    onScanDataReceived(scanDataMessage);
+				if(obj.get("data").isJsonObject()) {
+				    JsonObject dataObj = (JsonObject) obj.get("data");
+				    String referrer = dataObj.has("referrer") ? dataObj.get("referrer").getAsString() : null;
+				    int storeId = dataObj.has("store_id") ? dataObj.get("store_id").getAsInt() : -1;
+				    
+				    ScanDataMessage scanDataMessage = new ScanDataMessage(chat, timestamp, mention, readReceiptRequested, id, referrer, storeId);
+				    
+				    onScanDataReceived(scanDataMessage);
+				} else {
+				    ScanDataMessage scanDataMessage = new ScanDataMessage(chat, timestamp, mention, readReceiptRequested, id, obj.get("data").getAsString());
+				    
+				    onScanDataReceived(scanDataMessage);
+				}
 				break;
 				
 			case STICKER:

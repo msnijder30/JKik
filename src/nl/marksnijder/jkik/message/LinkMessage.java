@@ -74,7 +74,7 @@ public class LinkMessage extends Sendable {
 		params.addProperty("delay", getDelay());
 
 		params.addProperty("url", url);
-		params.add("attribution", attribute.toJsonObject());
+		if(attribute != null) params.add("attribution", attribute.toJsonObject());
 		params.addProperty("text", text);
 		params.addProperty("noForward", noForward);
 		

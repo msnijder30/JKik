@@ -8,6 +8,7 @@ import lombok.Getter;
 
 public class KikFiles {
 	
+	@Getter
 	private HashMap<UUID, File> files = new HashMap<UUID, File>();
 	
 	@Getter
@@ -25,6 +26,10 @@ public class KikFiles {
 	
 	public File getFile(UUID uuid) {
 		return files.get(uuid);
+	}
+	
+	public void removeFile(UUID uuid) {
+		files.remove(uuid);
 	}
 	
 	public String getPublicFileUrl(UUID uuid) {
