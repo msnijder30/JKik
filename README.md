@@ -8,10 +8,18 @@ public static void main(String[] args) throws Exception {
 	//Initialise the bot
 	KikApi api = new KikApi(username, key, 8080, new TestBot());
 	api.start();
+}
+```
 
+##User information
+```java
 	//Get user information
 	User user = api.getUserInfo("username");
-}
+```
+
+##Kik codes
+```java
+	String url = api.generateKikCodeUrl("input string here", KikColor.ORANGE_CREAMSICLE);
 ```
 
 ##Optional
@@ -118,17 +126,39 @@ MessageSender.sendMessages(read);
 
 
 #Sending media
-You can choose to send pictures from the local system or from url. Currently you can only send videos and gifs from urls.
+###From link:
+```java
+
+new PictureMessage("http://example.com/picture.jpg");
+
+//Use when not replying to a message but sending it with MessageSender instead
+new PictureMessage("http://example.com/picture.jpg", to, chatId);
+
+
+new VideoMessage("http://example.com/video.mp4");
+
+//Use when not replying to a message but sending it with MessageSender instead
+new VideoMessage("http://example.com/video.mp4", to, chatId);
+```
+
+###From local file:
+When sending from local the api's fileserver will serve the file to kik.
+You can remove local files using `api.getFiles().remove(uuid)`
 ```java
 new PictureMessage(getApi(), new File("pic.png"));
 
 //Use when not replying to a message but sending it with MessageSender instead
 new PictureMessage(getApi(), new File("pic.png"), to, chatId);
 
-new PictureMessage("http://example.com/picture.jpg");
+new VideoMessage(getApi(), new File("video.mp4"));
 
 //Use when not replying to a message but sending it with MessageSender instead
-new PictureMessage("http://example.com/picture.jpg", to, chatId);
+new VideoMessage(getApi(), new File("video.mp4"), to, chatId);
+
+new VideoMessage(getApi(), new File("video.gif"));
+
+//Use when not replying to a message but sending it with MessageSender instead
+new VideoMessage(getApi(), new File("video.gif"), to, chatId);
 ```
 
 
