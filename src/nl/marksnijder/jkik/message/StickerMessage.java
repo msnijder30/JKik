@@ -9,9 +9,9 @@ public class StickerMessage extends Message {
 	private String stickerUrl;
 	
 	@Getter
-	private long stickerPackId;
+	private String stickerPackId;
 	
-	public StickerMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, String stickerUrl, long stickerPackId) {
+	public StickerMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, String stickerUrl, String stickerPackId) {
 		super(chat, timestamp, mention, readReceiptRequested, MessageType.STICKER, id);
 		this.stickerUrl = stickerUrl;
 		this.stickerPackId = stickerPackId;

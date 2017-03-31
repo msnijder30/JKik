@@ -103,7 +103,7 @@ public abstract class KikBot {
 				break;
 				
 			case VIDEO:
-			    String videoUrl = obj.get("body").getAsString();
+			    String videoUrl = obj.get("videoUrl").getAsString();
 
 			    objAttr = (JsonObject) obj.get("attribution");
 			    at = new MessageAttribute(objAttr.get("iconUrl").getAsString(), objAttr.get("style").getAsString(), objAttr.get("name").getAsString());
@@ -138,7 +138,7 @@ public abstract class KikBot {
 				
 			case STICKER:
 			    String stickerUrl = obj.get("stickerUrl").getAsString();
-			    long stickerPackId = obj.get("stickerPackId").getAsLong();
+			    String stickerPackId = obj.get("stickerPackId").getAsString();
 			    
 			    StickerMessage stickerMessage = new StickerMessage(chat, timestamp, mention, readReceiptRequested, id, stickerUrl, stickerPackId);
 			    
