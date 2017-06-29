@@ -39,7 +39,7 @@ public class ReadReceipt extends Sendable {
 		JsonObject params = new JsonObject();
 		params.addProperty("type", getType().getType());
 		params.addProperty("to", getChat().getFrom());
-		params.addProperty("chatId", getChat().getChatId());
+		if(getChat().getChatId() != null) params.addProperty("chatId", getChat().getChatId());
 		
 		
 		JsonArray messageIds = new JsonArray();

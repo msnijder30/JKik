@@ -164,7 +164,7 @@ public class KikApi {
 			  response.append('\r');
 			}
 			
-			System.out.println("Response code: " + connection.getResponseCode());
+			System.out.println("Response code: " + connection.getResponseCode() + " " + connection.getResponseMessage());
 			System.out.println("Response:");
 			System.out.println(response);
 			

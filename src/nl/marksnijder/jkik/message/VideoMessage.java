@@ -119,7 +119,7 @@ public class VideoMessage extends Sendable {
 		JsonObject params = new JsonObject();
 		params.addProperty("type", getType().getType());
 		params.addProperty("to", getChat().getFrom());
-		params.addProperty("chatId", getChat().getChatId());
+		if(getChat().getChatId() != null) params.addProperty("chatId", getChat().getChatId());
 		params.addProperty("typeTime", getTypeTime() > 0 ? getTypeTime() : 0);
 		params.addProperty("delay", getDelay());
 
