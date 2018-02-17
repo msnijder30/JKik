@@ -11,19 +11,19 @@ public static void main(String[] args) throws Exception {
 }
 ```
 
-##User information
+## User information
 ```java
 	//Get user information
 	User user = api.getUserInfo("username");
 ```
 
-##Kik codes
+## Kik codes
 ```java
 	String url = api.generateKikCodeUrl("input string here", KikColor.ORANGE_CREAMSICLE);
 ```
 
-##Optional
-###Settings
+## Optional
+### Settings
 The `KikSettings` dataclass allows you to set the settings for:
 * manually sending read receipts
 * receiving read receipts
@@ -36,7 +36,7 @@ KikSettings settings = new KikSettings(true, true, true, true);
 KikApi api = new KikApi(username, key, 8080, new TestBot(), settings);
 ```
 
-###Static keyboard
+### Static keyboard
 
 For more about keyboards go to: 
 [Keyboards](#keyboards)
@@ -46,7 +46,7 @@ KeyBoard kb = new KeyBoard(button1, button2, button3...);
 KikApi api = new KikApi(username, key, 8080, new TestBot(), kb);
 ```
 
-###Both
+### Both
 ```java
 KikSettings settings = new KikSettings(true, true, true, true);
 KeyBoard kb = new KeyBoard(button1, button2, button3...);
@@ -55,12 +55,12 @@ KikApi api = new KikApi(username, key, 8080, new TestBot(), settings, kb);
 
 ```
 
-#Receiving messages
+# Receiving messages
 
 Simply create a class and let it extend `KikBot`. You'll be prompted to add the unimplemented methods, and you're ready to go!
 
 
-###A basic bot
+### A basic bot
 ```java
 public class TestBot extends KikBot {
 	
@@ -78,7 +78,7 @@ public class TestBot extends KikBot {
 ```
 
 
-#Sending messages
+# Sending messages
 There are quite a few messages you can send.
 * `TextMessage`
 * `PictureMessage`
@@ -114,7 +114,7 @@ TextMessage message1 = new TextMessage("hey", to, chatId);
 MessageSender.broadcastMessages(message1, message2...);
 ```
 
-###Send manual read receipts
+### Send manual read receipts
 Make sure you've enabled manually sending read receipts in the `KikConfig` and instantiated the `KikApi` with it.
 
 The id's in the read receipt constructor are the id's of the messages you want to read.
@@ -125,8 +125,8 @@ MessageSender.sendMessages(read);
 ```
 
 
-#Sending media
-###From link:
+# Sending media
+### From link:
 ```java
 
 new PictureMessage("http://example.com/picture.jpg");
@@ -141,7 +141,7 @@ new VideoMessage("http://example.com/video.mp4");
 new VideoMessage("http://example.com/video.mp4", to, chatId);
 ```
 
-###From local file:
+### From local file:
 When sending from local the api's fileserver will serve the file to kik.
 You can remove local files using `api.getFiles().remove(uuid)`
 ```java
@@ -162,7 +162,7 @@ new VideoMessage(getApi(), new File("video.gif"), to, chatId);
 ```
 
 
-###Custom
+### Custom
 It's also possible to send the pictures as camera, or you can choose a custom thumbnail and name using the `MessageAttribute` class.
 
 Supported message types:
@@ -191,7 +191,7 @@ new LinkMessage("http://example.com/", to, chatId, attr);
 ```
 
 
-###Send as camera
+### Send as camera
 
 Supported message types:
 * `PictureMessage`
@@ -204,10 +204,10 @@ new PictureMessage("http://example.com/picture.jpg", , to, chatId, attr).setSend
 ```
 
 
-#Keyboards
+# Keyboards
 Ofcourse, it's also possible to add keyboards to your messages. 
 
-###Buttons
+### Buttons
 To create a keyboard you need to add buttons to it. Supported buttons are:
 * `TextButton`
 * `FriendPicker`
@@ -222,14 +222,14 @@ and text buttons:
 TextButton text = new TextButton("message");
 ```
 
-###Creating the keyboard
+### Creating the keyboard
 
 ```java
 KeyBoard kb = new KeyBoard(button1, button2, button3...);
 ```
 It's also possible to show the keyboard to a specific user. `kb.setTo("username");`
 
-###Adding the keyboard to a message
+### Adding the keyboard to a message
 You can add multiple keyboards to a message. This way you can have unique keyboards for every user in a chat.
 ```java
 new TextMessage("hey").setKeyboards(keyboard1, keyboard2, keyboard3...);
@@ -239,11 +239,11 @@ new TextMessage("hey", to, chatId).setKeyboards(keyboard1, keyboard2, keyboard3.
 ```
 
 
-#Download
+# Download
 [Releases](https://github.com/msnijder30/JKik/releases/)
 
 
-#More information
+# More information
 You can find more information here:
 
 
