@@ -2,7 +2,7 @@
 A complete easy to use java wrapper for the kik api.
 ---
 
-#The basics
+# The basics
 ```java
 public static void main(String[] args) throws Exception { 
 	//Initialise the bot
