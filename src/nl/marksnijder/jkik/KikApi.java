@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Base64;
 
 import com.google.gson.Gson;
@@ -86,8 +87,16 @@ public class KikApi {
 		
 	    String lastName = obj.get("lastName").getAsString();
 	    String firstName = obj.get("firstName").getAsString();
-	    String profilePicUrl = obj.get("profilePicUrl").getAsString();
-	    long profilePicLastModified = obj.get("profilePicLastModified").isJsonNull() ? null : obj.get("profilePicLastModified").getAsLong();
+	    
+	    String profilePicUrl = null;
+	    if(obj.has("profilePicUrl")) {
+		    profilePicUrl = obj.get("profilePicUrl").isJsonNull() ? null : obj.get("profilePicUrl").getAsString();
+	    }
+
+	    long profilePicLastModified = -1;
+	    if(obj.has("profilePicLastModified")) {
+		    profilePicLastModified = obj.get("profilePicLastModified").isJsonNull() ? null : obj.get("profilePicLastModified").getAsLong();
+	    }
 	    
 	    return new User(firstName, lastName, profilePicUrl, profilePicLastModified);
 	}
@@ -149,7 +158,7 @@ public class KikApi {
 			if(type == MethodType.POST) {
 				connection.setDoOutput(true);
 				DataOutputStream wr = new DataOutputStream (connection.getOutputStream());
-				wr.writeBytes(urlParameters);
+				wr.write(urlParameters.getBytes(Charset.forName("UTF-8")));
 				wr.flush();
 				wr.close();
 			}
