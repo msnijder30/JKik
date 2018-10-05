@@ -62,6 +62,7 @@ public abstract class KikBot {
 		    long timestamp = obj.get("timestamp").getAsLong();
 		    String mention = obj.get("mention").isJsonNull() ? null : obj.get("mention").getAsString();
 		    boolean readReceiptRequested = obj.get("readReceiptRequested").getAsBoolean();
+		    JsonObject metadata = obj.has("metadata") && !obj.get("metadata").isJsonNull() ? obj.get("metadata").getAsJsonObject() : null;
 		    
 
 		    Type listType = new TypeToken<ArrayList<String>>() {}.getType();
@@ -74,7 +75,7 @@ public abstract class KikBot {
 			case TEXT:
 			    String body = obj.get("body").getAsString();
 			    
-			    TextMessage textMessage = new TextMessage(chat, timestamp, mention, readReceiptRequested, id, body);
+			    TextMessage textMessage = new TextMessage(chat, timestamp, mention, readReceiptRequested, id, body, metadata);
 			    
 			    onTextReceived(textMessage);
 				break;
@@ -88,7 +89,7 @@ public abstract class KikBot {
 				JsonObject objAttr = (JsonObject) obj.get("attribution");
 			    MessageAttribute at = new MessageAttribute(objAttr.get("iconUrl").getAsString(), objAttr.get("style").getAsString(), objAttr.get("name").getAsString());
 
-			    LinkMessage linkMessage = new LinkMessage(chat, timestamp, mention, readReceiptRequested, id, at, url, readReceiptRequested, dataAttr, text);
+			    LinkMessage linkMessage = new LinkMessage(chat, timestamp, mention, readReceiptRequested, id, at, url, readReceiptRequested, dataAttr, text, metadata);
 				onLinkReceived(linkMessage);
 				break;
 				
@@ -97,7 +98,7 @@ public abstract class KikBot {
 			    
 			    objAttr = (JsonObject) obj.get("attribution");
 			    at = new MessageAttribute(objAttr.get("iconUrl").getAsString(), objAttr.get("style").getAsString(), objAttr.get("name").getAsString());
-			    PictureMessage pictureMessage = new PictureMessage(chat, timestamp, mention, readReceiptRequested, id, at, pictureUrl);
+			    PictureMessage pictureMessage = new PictureMessage(chat, timestamp, mention, readReceiptRequested, id, at, pictureUrl, metadata);
 			    
 			    onPictureReceived(pictureMessage);
 				break;
@@ -107,7 +108,7 @@ public abstract class KikBot {
 
 			    objAttr = (JsonObject) obj.get("attribution");
 			    at = new MessageAttribute(objAttr.get("iconUrl").getAsString(), objAttr.get("style").getAsString(), objAttr.get("name").getAsString());
-			    VideoMessage videoMessage = new VideoMessage(chat, timestamp, mention, readReceiptRequested, id, at, videoUrl);
+			    VideoMessage videoMessage = new VideoMessage(chat, timestamp, mention, readReceiptRequested, id, at, videoUrl, metadata);
 			    
 			    onVideoReceived(videoMessage);
 				break;
@@ -115,7 +116,7 @@ public abstract class KikBot {
 			case START_CHATTING:
 			    body = obj.get("body").getAsString();
 			    
-			    textMessage = new TextMessage(chat, timestamp, mention, readReceiptRequested, id, body);
+			    textMessage = new TextMessage(chat, timestamp, mention, readReceiptRequested, id, body, metadata);
 			    
 			    onStartChattingReceived(textMessage);
 				break;
@@ -126,11 +127,11 @@ public abstract class KikBot {
 				    String referrer = dataObj.has("referrer") ? dataObj.get("referrer").getAsString() : null;
 				    int storeId = dataObj.has("store_id") ? dataObj.get("store_id").getAsInt() : -1;
 				    
-				    ScanDataMessage scanDataMessage = new ScanDataMessage(chat, timestamp, mention, readReceiptRequested, id, referrer, storeId);
+				    ScanDataMessage scanDataMessage = new ScanDataMessage(chat, timestamp, mention, readReceiptRequested, id, referrer, storeId, metadata);
 				    
 				    onScanDataReceived(scanDataMessage);
 				} else {
-				    ScanDataMessage scanDataMessage = new ScanDataMessage(chat, timestamp, mention, readReceiptRequested, id, obj.get("data").getAsString());
+				    ScanDataMessage scanDataMessage = new ScanDataMessage(chat, timestamp, mention, readReceiptRequested, id, obj.get("data").getAsString(), metadata);
 				    
 				    onScanDataReceived(scanDataMessage);
 				}
@@ -140,7 +141,7 @@ public abstract class KikBot {
 			    String stickerUrl = obj.get("stickerUrl").getAsString();
 			    String stickerPackId = obj.get("stickerPackId").getAsString();
 			    
-			    StickerMessage stickerMessage = new StickerMessage(chat, timestamp, mention, readReceiptRequested, id, stickerUrl, stickerPackId);
+			    StickerMessage stickerMessage = new StickerMessage(chat, timestamp, mention, readReceiptRequested, id, stickerUrl, stickerPackId, metadata);
 			    
 			    onStickerReceived(stickerMessage);
 				break;

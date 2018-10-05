@@ -1,5 +1,7 @@
 package nl.marksnijder.jkik.message;
 
+import com.google.gson.JsonObject;
+
 import lombok.Getter;
 import lombok.Setter;
 import nl.marksnijder.jkik.Chat;
@@ -31,18 +33,23 @@ public abstract class Message {
 	@Getter @Setter
 	private int delay = 0;
 	
+	@Getter
+	private JsonObject metadata;
 	
-	public Message(Chat chat, long timestamp, String mention, boolean readReceiptRequested, MessageType type, String id) {
+	
+	public Message(Chat chat, long timestamp, String mention, boolean readReceiptRequested, MessageType type, String id, JsonObject metadata) {
 		this.chat = chat;
 		this.timestamp = timestamp;
 		this.mention = mention;
 		this.readReceiptRequested = readReceiptRequested;
 		this.type = type;
 		this.id = id;
+		this.metadata = metadata;
 	}
 	
-	public Message(String from, MessageType type, String chatId) {
+	public Message(String from, MessageType type, String chatId, JsonObject metadata) {
 		this.type = type;
+		this.metadata = metadata;
 		this.chat = new Chat(null, chatId, from);
 	}
 	

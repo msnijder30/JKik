@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import lombok.Getter;
+import lombok.Setter;
 import nl.marksnijder.jkik.Chat;
 import nl.marksnijder.jkik.keyboard.Keyboard;
 
@@ -16,8 +17,8 @@ public class TextMessage extends Sendable {
 	 * @deprecated Please use the other constructors as they have the arguments you need exactly. This constructor is mostly for internal use.
 	 */
 	@Deprecated
-	public TextMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, String body) {
-		super(chat, timestamp, mention, readReceiptRequested, MessageType.TEXT, id);
+	public TextMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, String body, JsonObject metadata) {
+		super(chat, timestamp, mention, readReceiptRequested, MessageType.TEXT, id, metadata);
 		this.body = body;
 	}
 	

@@ -21,7 +21,7 @@ public class ReadReceipt extends Sendable {
 	 */
 	@Deprecated
 	public ReadReceipt(Chat chat, long timestamp, String mention, boolean readReceiptRequested, MessageType type, String id, List<String> messageIds) {
-		super(chat, timestamp, mention, readReceiptRequested, MessageType.READ_RECEIPT, id);
+		super(chat, timestamp, mention, readReceiptRequested, MessageType.READ_RECEIPT, id, null);
 		this.messageIds = messageIds;
 	}
 	

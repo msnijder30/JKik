@@ -163,8 +163,16 @@ public class KikApi {
 				wr.close();
 			}
 			
-			//Get Response  
-			InputStream is = connection.getInputStream();
+			int responseCode = connection.getResponseCode();
+
+			InputStream is = null;
+			if(responseCode >= 200 && responseCode < 400) {
+				is = connection.getInputStream();
+			} else {
+				is = connection.getErrorStream();
+			}
+			
+			//Get Response
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 			StringBuilder response = new StringBuilder();
 			String line;
@@ -178,6 +186,10 @@ public class KikApi {
 			System.out.println(response);
 			
 			rd.close();
+
+			if(!(responseCode >= 200 && responseCode < 400)) {
+				throw new Exception("Error code: " + responseCode + " message: " + connection.getResponseMessage());
+			}
 			return response.toString();
 
 		  } catch (Exception e) {

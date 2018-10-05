@@ -17,7 +17,7 @@ public class DeliveryReceipt extends Message {
 	 */
 	@Deprecated
 	public DeliveryReceipt(Chat chat, long timestamp, String mention, boolean readReceiptRequested, MessageType type, String id, ArrayList<String> messageIds) {
-		super(chat, timestamp, mention, readReceiptRequested, type, id);
+		super(chat, timestamp, mention, readReceiptRequested, type, id, null);
 		this.messageIds = messageIds;
 	}
 

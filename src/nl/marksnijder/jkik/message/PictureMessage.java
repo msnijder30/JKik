@@ -26,8 +26,8 @@ public class PictureMessage extends Sendable {
 	 * @deprecated Please use the other constructors as they have the arguments you need exactly. This constructor is mostly for internal use.
 	 */
 	@Deprecated
-	public PictureMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribution, String pictureUrl) {
-		super(chat, timestamp, mention, readReceiptRequested, MessageType.PICTURE, id);
+	public PictureMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribution, String pictureUrl, JsonObject metadata) {
+		super(chat, timestamp, mention, readReceiptRequested, MessageType.PICTURE, id, metadata);
 		this.attribution = attribution;
 		this.pictureUrl = pictureUrl;
 	}

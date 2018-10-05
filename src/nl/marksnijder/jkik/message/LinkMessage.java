@@ -28,8 +28,8 @@ public class LinkMessage extends Sendable {
 	 * @deprecated Please use the other constructors as they have the arguments you need exactly. This constructor is mostly for internal use.
 	 */
 	@Deprecated
-	public LinkMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribute, String url, boolean noForward, JsonObject kikJsData, String text) {
-		super(chat, timestamp, mention, readReceiptRequested, MessageType.LINK, id);
+	public LinkMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribute, String url, boolean noForward, JsonObject kikJsData, String text, JsonObject metadata) {
+		super(chat, timestamp, mention, readReceiptRequested, MessageType.LINK, id, metadata);
 		this.attribute = attribute;
 		this.url = url;
 		this.noForward = noForward;

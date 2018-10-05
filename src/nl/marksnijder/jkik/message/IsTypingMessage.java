@@ -9,7 +9,7 @@ public class IsTypingMessage extends Message {
 	private boolean isTyping;
 
 	public IsTypingMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, boolean isTyping) {
-		super(chat, timestamp, mention, readReceiptRequested, MessageType.IS_TYPING, id);
+		super(chat, timestamp, mention, readReceiptRequested, MessageType.IS_TYPING, id, null);
 		this.isTyping = isTyping;
 	}
 

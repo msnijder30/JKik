@@ -39,8 +39,8 @@ public class VideoMessage extends Sendable {
 	 * @deprecated Please use the other constructors as they have the arguments you need exactly. This constructor is mostly for internal use.
 	 */
 	@Deprecated
-	public VideoMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribution, String videoUrl) {
-		super(chat, timestamp, mention, readReceiptRequested, MessageType.VIDEO, id);
+	public VideoMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribution, String videoUrl, JsonObject metadata) {
+		super(chat, timestamp, mention, readReceiptRequested, MessageType.VIDEO, id, metadata);
 		this.attribution = attribution;
 		this.videoUrl = videoUrl;
 	}
