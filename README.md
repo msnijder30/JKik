@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.msnijder30/jkik/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.msnijder30/jkik)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.msnijder30/jkik/badge.png)](https://maven-badges.herokuapp.com/maven-central/com.github.msnijder30/jkik)
 
 
 
