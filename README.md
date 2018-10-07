@@ -1,3 +1,6 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.msnijder30/jkik/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.msnijder30/jkik)
+
+
 # JKik
 A complete easy to use java wrapper for the kik api.
 ---
