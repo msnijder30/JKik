@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
   <groupId>com.github.msnijder30</groupId>
   <artifactId>jkik</artifactId>
   <version>1.2</version>
@@ -10,7 +11,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>  
   
-  <name>JKik</name>
+  <name>JKik, a Kik bot Java library.</name>
   <description>A Java library for writing Kik bots.</description>
   <url>https://github.com/msnijder30/JKik</url>
   
@@ -18,9 +19,23 @@
     <license>
       <name>Apache License, Version 2.0</name>
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
     </license>
   </licenses>
+  
+  <developers>
+    <developer>
+      <name>Mark Snijder</name>
+      <email>snijderd@gmail.com</email>
+      <organization>com.github.msnijder30</organization>
+      <organizationUrl>https://github.com/msnijder30/</organizationUrl>
+    </developer>
+  </developers>
+  
+  <scm>
+    <connection>scm:git:git://github.com/msnijder30/JKik.git</connection>
+    <developerConnection>scm:git:ssh://github.com:msnijder30/JKik.git</developerConnection>
+    <url>https://github.com/msnijder30/JKik</url>
+  </scm>
   
   <dependencies>
   
