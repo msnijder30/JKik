@@ -10,7 +10,7 @@ import nl.marksnijder.jkik.keyboard.Keyboard;
 public class LinkMessage extends Sendable {
 	
 	@Getter
-	private MessageAttribute attribute;
+	private MessageAttribute attribution;
 	
 	@Getter
 	private String url;
@@ -30,7 +30,7 @@ public class LinkMessage extends Sendable {
 	@Deprecated
 	public LinkMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribute, String url, boolean noForward, JsonObject kikJsData, String text, JsonObject metadata) {
 		super(chat, timestamp, mention, readReceiptRequested, MessageType.LINK, id, metadata);
-		this.attribute = attribute;
+		this.attribution = attribute;
 		this.url = url;
 		this.noForward = noForward;
 		this.kikJsData = kikJsData;
@@ -40,7 +40,7 @@ public class LinkMessage extends Sendable {
 	public LinkMessage(String url, String to, String chatId, MessageAttribute attribute) {
 		super(to, MessageType.LINK, chatId);
 		this.url = url;
-		this.attribute = attribute;
+		this.attribution = attribute;
 	}
 	
 	public LinkMessage(String url, String to, String chatId) {
@@ -54,7 +54,7 @@ public class LinkMessage extends Sendable {
 	public LinkMessage(String url, MessageAttribute attribute) {
 		super(MessageType.LINK);
 		this.url = url;
-		this.attribute = attribute;
+		this.attribution = attribute;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class LinkMessage extends Sendable {
 		params.addProperty("delay", getDelay());
 
 		params.addProperty("url", url);
-		if(attribute != null) params.add("attribution", attribute.toJsonObject());
+		if(attribution != null) params.add("attribution", attribution.toJsonObject());
 		params.addProperty("text", text);
 		params.addProperty("noForward", noForward);
 		

@@ -17,7 +17,7 @@ public class PictureMessage extends Sendable {
 	private MessageAttribute attribution;
 	
 	@Getter
-	private String pictureUrl;
+	private String picUrl;
 
 	@Getter
 	private boolean sendAsCamera;
@@ -29,32 +29,32 @@ public class PictureMessage extends Sendable {
 	public PictureMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, MessageAttribute attribution, String pictureUrl, JsonObject metadata) {
 		super(chat, timestamp, mention, readReceiptRequested, MessageType.PICTURE, id, metadata);
 		this.attribution = attribution;
-		this.pictureUrl = pictureUrl;
+		this.picUrl = pictureUrl;
 	}
 	
 	public PictureMessage(KikApi api, File pic, String to, String chatId) {
 		super(to, MessageType.PICTURE, chatId);
 		
 		UUID uuid = api.getFiles().addFile(pic);
-		this.pictureUrl = api.getFiles().getPublicFileUrl(uuid);
+		this.picUrl = api.getFiles().getPublicFileUrl(uuid);
 	}
 	
 	public PictureMessage(String url, String to, String chatId) {
 		super(to, MessageType.PICTURE, chatId);
-		this.pictureUrl = url;
+		this.picUrl = url;
 	}
 	
 	public PictureMessage(KikApi api, File pic, String to, String chatId, MessageAttribute attr) {
 		super(to, MessageType.PICTURE, chatId);
 		
 		UUID uuid = api.getFiles().addFile(pic);
-		this.pictureUrl = api.getFiles().getPublicFileUrl(uuid);
+		this.picUrl = api.getFiles().getPublicFileUrl(uuid);
 		this.attribution = attr;
 	}
 	
 	public PictureMessage(String url, String to, String chatId, MessageAttribute attr) {
 		super(to, MessageType.PICTURE, chatId);
-		this.pictureUrl = url;
+		this.picUrl = url;
 		this.attribution = attr;
 	}
 	
@@ -62,7 +62,7 @@ public class PictureMessage extends Sendable {
 		super(MessageType.PICTURE);
 		
 		UUID uuid = api.getFiles().addFile(pic);
-		this.pictureUrl = api.getFiles().getPublicFileUrl(uuid);
+		this.picUrl = api.getFiles().getPublicFileUrl(uuid);
 		this.attribution = attr;
 	}
 	
@@ -71,7 +71,7 @@ public class PictureMessage extends Sendable {
 	 */
 	public PictureMessage(String url, MessageAttribute attr) {
 		super(MessageType.PICTURE);
-		this.pictureUrl = url;
+		this.picUrl = url;
 		this.attribution = attr;
 	}
 
@@ -82,7 +82,7 @@ public class PictureMessage extends Sendable {
 		super(MessageType.PICTURE);
 		
 		UUID uuid = api.getFiles().addFile(pic);
-		this.pictureUrl = api.getFiles().getPublicFileUrl(uuid);
+		this.picUrl = api.getFiles().getPublicFileUrl(uuid);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class PictureMessage extends Sendable {
 	 */
 	public PictureMessage(String url) {
 		super(MessageType.PICTURE);
-		this.pictureUrl = url;
+		this.picUrl = url;
 	}
 	
 	public PictureMessage setSendAsCamera(boolean value) {
@@ -110,7 +110,7 @@ public class PictureMessage extends Sendable {
 		params.addProperty("typeTime", getTypeTime() > 0 ? getTypeTime() : 0);
 		params.addProperty("delay", getDelay());
 
-		params.addProperty("picUrl", getPictureUrl());
+		params.addProperty("picUrl", getPicUrl());
 		
 		if(this.attribution != null && !isSendAsCamera()) {
 			params.add("attribution", this.attribution.toJsonObject());
