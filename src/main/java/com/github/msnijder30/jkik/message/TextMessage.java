@@ -13,15 +13,6 @@ public class TextMessage extends Sendable {
 	@Getter
 	private String body;
 
-	/**
-	 * @deprecated Please use the other constructors as they have the arguments you need exactly. This constructor is mostly for internal use.
-	 */
-	@Deprecated
-	public TextMessage(Chat chat, long timestamp, String mention, boolean readReceiptRequested, String id, String body, JsonObject metadata) {
-		super(chat, timestamp, mention, readReceiptRequested, MessageType.TEXT, id, metadata);
-		this.body = body;
-	}
-	
 	public TextMessage(String body, String to, String chatId) {
 		super(to, MessageType.TEXT, chatId);
 		this.body = body;

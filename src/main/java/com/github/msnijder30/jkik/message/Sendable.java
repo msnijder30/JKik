@@ -17,14 +17,6 @@ public abstract class Sendable extends Message {
 	@Getter
 	private List<Keyboard> keyboards;
 	
-	/**
-	 * @deprecated Please use the other constructors as they have the arguments you need exactly. This constructor is mostly for internal use.
-	 */
-	@Deprecated
-	public Sendable(Chat chat, long timestamp, String mention, boolean readReceiptRequested, MessageType type, String id, JsonObject metadata) {
-		super(chat, timestamp, mention, readReceiptRequested, type, id, metadata);
-	}
-	
 	public Sendable(String from, MessageType type, String chatId) {
 		super(from, type, chatId, null);
 	}

@@ -15,16 +15,7 @@ public class ReadReceipt extends Sendable {
 	
 	@Getter
 	private List<String> messageIds;
-	
-	/**
-	 * @deprecated Please use the other constructors as they have the arguments you need exactly. This constructor is mostly for internal use.
-	 */
-	@Deprecated
-	public ReadReceipt(Chat chat, long timestamp, String mention, boolean readReceiptRequested, MessageType type, String id, List<String> messageIds) {
-		super(chat, timestamp, mention, readReceiptRequested, MessageType.READ_RECEIPT, id, null);
-		this.messageIds = messageIds;
-	}
-	
+
 	public ReadReceipt(List<String> messageIds) {
 		super(MessageType.READ_RECEIPT);
 		this.messageIds = messageIds;
