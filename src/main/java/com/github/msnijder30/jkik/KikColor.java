@@ -1,0 +1,22 @@
+package com.github.msnijder30.jkik;
+
+public enum KikColor {
+	
+	KIK_BLUE,
+	TURQUOISE,
+	MINT,
+	FOREST,
+	KIK_GREEN,
+	SUNSHINE,
+	ORANGE_CREAMSICLE,
+	BLOOD_ORANGE,
+	CANDY_APPLE_RED,
+	SALMON,
+	CORAL,
+	CRANBERRY,
+	LAVENDER,
+	ROYAL_PURPLE,
+	MARINE,
+	STEEL,
+
+}

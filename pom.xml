@@ -1,13 +1,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>nl.marksnijder.jkik</groupId>
+  <groupId>com.github.msnijder30</groupId>
   <artifactId>jkik</artifactId>
   <version>1.2</version>
+  <packaging>jar</packaging>
   
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-  </properties>
+  </properties>  
+  
+  <name>JKik</name>
+  <description>A Java library for writing Kik bots.</description>
+  <url>https://github.com/msnijder30/JKik</url>
+  
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
   
   <dependencies>
   
