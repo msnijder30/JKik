@@ -1,5 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.msnijder30/jkik/badge.png)](https://maven-badges.herokuapp.com/maven-central/com.github.msnijder30/jkik)
-
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.msnijder30/jkik.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.msnijder30%22%20AND%20a:%22jkik%22)
 
 
 # JKik
