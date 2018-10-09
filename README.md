@@ -1,4 +1,5 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.msnijder30/jkik.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.msnijder30%22%20AND%20a:%22jkik%22)
+![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)
 
 
 # JKik
