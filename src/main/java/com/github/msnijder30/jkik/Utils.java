@@ -16,53 +16,54 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Utils {
-	
+
+	private static final Logger logger = LogManager.getLogger(Utils.class);
+
 	private static String ip;
-	public static String getPublicIP() {
-		if(ip != null) return ip;
+
+	public static String getPublicIP() throws IOException {
+		if (ip != null) {
+			return ip;
+		}
 		try {
 			URL whatismyip = new URL("http://checkip.amazonaws.com");
 			BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
+			ip = in.readLine();
+			logger.info(String.format("Public IP retrieved: %s", ip));
 
-			ip = in.readLine(); 
-		} catch (Exception e) {
-			e.printStackTrace();
+			return ip;
+		} catch (IOException e) {
+			logger.error("Failed to retrieve public IP", e);
+			throw e;
 		}
-		return ip;
 	}
-	
-	public static <T> T getValue(JsonObject obj, String find) {
-		T nullableVal = (T) obj.get(find);
-		T val = (nullableVal instanceof JsonNull) ? null : (T) nullableVal;
-		return val;
-	}
-	
+
 	public static String HmacSHA1(String data, String key) throws NoSuchAlgorithmException, InvalidKeyException {
 		SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "HmacSHA1");
 		Mac mac = Mac.getInstance("HmacSHA1");
 		mac.init(keySpec);
-		
+
 		return DatatypeConverter.printHexBinary(mac.doFinal(data.getBytes()));
 	}
-	
+
 	public static void saveFile(String url, String path) throws MalformedURLException, IOException {
 		URLConnection connection = new URL(url).openConnection();
 		connection.setRequestProperty("User-Agent", "Mozilla");
 
 		InputStream is = connection.getInputStream();
 		OutputStream os = new FileOutputStream(path);
-	 
+
 		byte[] b = new byte[2048];
 		int length;
-	 
+
 		while ((length = is.read(b)) != -1) {
 			os.write(b, 0, length);
 		}
-	 
+
 		is.close();
 		os.close();
 	}
