@@ -147,7 +147,8 @@ public class KikApi {
 	}
 
 	public String executePost(String targetURL, String urlParameters, MethodType type) {
-		logger.debug(String.format("Attempting to send %s request with data %s", type.toString(), urlParameters));
+		logger.debug(String.format("Attempting to send %s request with data %s to %s", type.toString(), urlParameters,
+				targetURL));
 
 		HttpURLConnection connection = null;
 
@@ -208,7 +209,6 @@ public class KikApi {
 			return response.toString();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		} finally {
 			if (connection != null) {
