@@ -10,9 +10,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Base64;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.msnijder30.jkik.keyboard.Keyboard;
 import com.github.msnijder30.jkik.thread.KikServer;
@@ -25,13 +24,7 @@ import lombok.Setter;
 
 public class KikApi {
 
-	public static Level LOGLEVEL = Level.ALL;
-
-	static {
-		JKikLogger.getInstance().initialize(LOGLEVEL);
-	}
-
-	private static final Logger logger = LogManager.getLogger(KikApi.class);
+	private static final Logger logger = LoggerFactory.getLogger(KikApi.class);
 
 	@Getter
 	private String username;
@@ -154,7 +147,7 @@ public class KikApi {
 	}
 
 	public String executePost(String targetURL, String urlParameters, MethodType type) {
-		logger.trace(String.format("Attempting to send %s request with data %s", type.toString(), urlParameters));
+		logger.debug(String.format("Attempting to send %s request with data %s", type.toString(), urlParameters));
 
 		HttpURLConnection connection = null;
 

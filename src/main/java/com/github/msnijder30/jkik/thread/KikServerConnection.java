@@ -15,15 +15,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.UUID;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.msnijder30.jkik.KikApi;
 import com.github.msnijder30.jkik.Utils;
 
 public class KikServerConnection extends Thread {
 
-	private static final Logger logger = LogManager.getLogger(KikServerConnection.class);
+	private static final Logger logger = LoggerFactory.getLogger(KikServerConnection.class);
 
 	private KikApi api;
 	private Socket socket;

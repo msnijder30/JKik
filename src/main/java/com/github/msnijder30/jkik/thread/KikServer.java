@@ -3,14 +3,14 @@ package com.github.msnijder30.jkik.thread;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.msnijder30.jkik.KikApi;
 
 public class KikServer extends Thread {
 
-	private static final Logger logger = LogManager.getLogger(KikServer.class);
+	private static final Logger logger = LoggerFactory.getLogger(KikServer.class);
 
 	private KikApi api;
 	private ServerSocket socket;
@@ -39,7 +39,7 @@ public class KikServer extends Thread {
 
 		}
 
-		logger.fatal("The socket is not bound anymore!");
+		logger.error("The socket is not bound anymore!");
 
 		try {
 			socket.close();

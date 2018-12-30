@@ -16,12 +16,12 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Utils {
 
-	private static final Logger logger = LogManager.getLogger(Utils.class);
+	private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 
 	private static String ip;
 
